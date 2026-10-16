@@ -1,0 +1,24 @@
+services:
+  mom-pipeline:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      # Persist SQLite DB + transcripts/results/uploads across container restarts.
+      - ./data:/app/data
+      # Persist downloaded model weights (multi-GB) across container restarts.
+      - hf-cache:/root/.cache/huggingface
+    # Uncomment to run on an NVIDIA GPU (also requires the NVIDIA Container
+    # Toolkit on the host, and WHISPER_DEVICE=cuda etc. in .env):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: 1
+    #           capabilities: [gpu]
+
+volumes:
+  hf-cache:

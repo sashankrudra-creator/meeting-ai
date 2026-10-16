@@ -1,0 +1,24 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+# B008 (function call in default argument) is standard, idiomatic FastAPI
+# usage (`Depends(...)` as a parameter default) — not a real bug here.
+# UP042: keeping `class Foo(str, Enum)` rather than `StrEnum` deliberately —
+# it's the more portable pattern and changing it isn't worth re-verifying
+# every Pydantic (de)serialization path that touches ProcessingStatus.
+ignore = ["B008", "UP042"]
+
+[tool.black]
+line-length = 120
+target-version = ["py311"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true

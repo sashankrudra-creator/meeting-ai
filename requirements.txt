@@ -1,0 +1,51 @@
+## Core backend
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.9.0
+pydantic-settings>=2.6.0
+python-multipart>=0.0.12
+
+## Audio/video
+ffmpeg-python>=0.2.0
+
+## Speech recognition (local inference, weights via Hugging Face Hub)
+faster-whisper>=1.0.3
+
+## Speaker diarization (local inference, weights via Hugging Face Hub, gated - requires HF token)
+##
+## Pinned to exact, verified-compatible versions rather than left as
+## unbounded `>=` ranges (audit finding H1). An unbounded `pyannote.audio`
+## range previously resolved to 4.0.7, whose `Pipeline.from_pretrained()`
+## takes `token=` and no longer accepts `use_auth_token=` at all (a
+## TypeError, confirmed by actually calling it in this environment — see
+## audit finding C2 / app/pipeline/diarization.py).
+##
+## torch/torchaudio: `pip index versions` shows torchaudio's newest
+## published release is 2.11.0 while torch has moved on to 2.14.0 —
+## torchaudio's release cadence has fallen behind torch's (consistent with
+## pyannote-audio 4.0.7 depending on `torchcodec` for audio I/O rather than
+## torchaudio/soundfile; torchaudio is still a transitive hard dependency
+## of pyannote-audio and torch-audiomentations, so it can't simply be
+## dropped). There is therefore no newer torchaudio release that matches
+## torch 2.14.0's version number. This exact pair was verified, not
+## guessed: `pip install`'s own resolver picks precisely this combination
+## for `pyannote.audio==4.0.7`, and both `torchaudio.load()` on a real WAV
+## file and a `torchaudio.transforms.MFCC` pass ran successfully against it
+## in this environment.
+pyannote.audio==4.0.7
+torch==2.14.0
+torchaudio==2.11.0
+
+## Local summarization (local inference, weights via Hugging Face Hub)
+transformers>=4.44.0
+accelerate>=0.34.0
+sentencepiece>=0.2.0
+
+## Utilities
+tenacity>=9.0.0
+python-dotenv>=1.0.1
+
+## Testing
+pytest>=8.3.0
+pytest-asyncio>=0.24.0
+httpx>=0.27.0

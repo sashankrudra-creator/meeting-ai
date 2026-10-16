@@ -1,0 +1,85 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+build/
+dist/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+ENV/
+
+# --- Environment variables / secrets / tokens ---
+.env
+.env.*
+!.env.example
+*.token
+*.key
+*credentials*.json
+*secret*.json
+
+# --- Hugging Face / model caches ---
+# Default local HF cache location if it ever ends up under the project
+# (production deployments typically point HF_HOME outside the repo, e.g.
+# E:\hf-cache, which is never inside this tree to begin with).
+.cache/
+.cache/huggingface/
+huggingface_cache/
+hf-cache/
+models_cache/
+**/huggingface/
+# Model weight files, in case any get downloaded/exported into the repo
+*.safetensors
+*.bin
+*.gguf
+*.ckpt
+*.pt
+*.pth
+
+# --- Temporary processed/upload files & generated runtime data ---
+# data/{uploads,processed,transcripts,results} hold per-meeting artifacts
+# generated at runtime (uploaded audio, normalized WAVs, transcripts,
+# results). Only the folder structure (.gitkeep) is tracked.
+data/uploads/*
+data/processed/*
+data/transcripts/*
+data/results/*
+!data/uploads/.gitkeep
+!data/processed/.gitkeep
+!data/transcripts/.gitkeep
+!data/results/.gitkeep
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# --- Test / lint / type-check caches ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+
+# --- Logs ---
+*.log
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Editors ---
+.vscode/
+.idea/
+
+# --- Large research/reference datasets and misc archives ---
+# Present in this working copy but not part of the pipeline submission;
+# these must never be pushed to GitHub (one alone is ~1.9GB).
+voxconverse_dev_wav/
+voxconverse_annotations/
+voxconverse_dev_wav.zip
+Claude outputs/
+*.zip
